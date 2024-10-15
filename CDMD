@@ -224,4 +224,77 @@ login.xaml
 
     </Border>
 </Grid>
+-----------------------------------------------------
 
+appointmentScheduling
+
+ <Grid>
+     <Grid.RowDefinitions>
+         <RowDefinition Height="Auto"/>
+         <RowDefinition Height="*"/>
+         <RowDefinition Height="Auto"/>
+     </Grid.RowDefinitions>
+
+     <TextBlock Grid.Row="0" FontSize="20" FontWeight="Bold"
+        HorizontalAlignment="Center" Margin="10" Foreground="Black">
+ Appointment Scheduling
+     </TextBlock>
+
+     <Grid Grid.Row="1" Margin="10">
+         <Grid.ColumnDefinitions>
+             <ColumnDefinition Width="Auto"/>
+             <ColumnDefinition Width="*"/>
+         </Grid.ColumnDefinitions>
+         <Grid.RowDefinitions>
+             <RowDefinition Height="Auto"/>
+             <RowDefinition Height="Auto"/>
+             <RowDefinition Height="Auto"/>
+             <RowDefinition Height="Auto"/>
+             <RowDefinition Height="Auto"/>
+             <RowDefinition Height="Auto"/>
+
+         </Grid.RowDefinitions>
+
+         <Label Grid.Row="0" Grid.Column="0" Content="Patient ID:" Margin="0,5,5,5" Foreground="Black"/>
+         <TextBox x:Name="patientIDTextBox" Grid.Row="0" Grid.Column="1" Width="150" Margin="5,5,5,5"/>
+
+         <Label Grid.Row="1" Grid.Column="0" Content="UserID:" Margin="0,5,5,5" Foreground="Black"/>
+         <TextBox x:Name="userIDTextBox" Grid.Row="1" Grid.Column="1" Width="150" Margin="5,5,5,5"/>
+
+         <Label Grid.Row="2" Grid.Column="0" Content="Appointment Date:" Margin="0,5,5,5" Foreground="Black"/>
+         <DatePicker x:Name="appointmentDatePicker" Grid.Row="2" Grid.Column="1" Width="150" Margin="5,5,5,5"/>
+
+         <Label Grid.Row="3" Grid.Column="0" Content="Appointment Time:" Margin="0,5,5,5" Foreground="Black"/>
+         <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal" Margin="5,5,5,5">
+             <ComboBox x:Name="hourComboBox" Width="60" Margin="0,0,5,0">
+                 <ComboBoxItem Content="08" />
+                 <ComboBoxItem Content="09" />
+                 <ComboBoxItem Content="10" />
+             </ComboBox>
+             <TextBlock Text=":" VerticalAlignment="Center" />
+             <ComboBox Name="minuteComboBox" Width="60" Margin="5,0,0,0">
+                 <ComboBoxItem Content="00" />
+                 <ComboBoxItem Content="15" />
+                 <ComboBoxItem Content="30" />
+                 <ComboBoxItem Content="45" />
+             </ComboBox>
+         </StackPanel>
+
+         <Label Grid.Row="4" Grid.Column="0" Content="Status:" Margin="0,5,5,5" Foreground="Black"/>
+         <ComboBox Name="statusComboBox" Grid.Row="4" Grid.Column="1" Width="150" Margin="5,5,5,5">
+             <ComboBoxItem Content="Scheduled" />
+             <ComboBoxItem Content="Completed" />
+             <ComboBoxItem Content="Canceled" />
+         </ComboBox>
+
+         <Label Grid.Row="5" Grid.Column="0" Content="Notes:" Margin="0,5,5,5" Foreground="Black"/>
+         <TextBox x:Name="notesTextBox" Grid.Row="5" Grid.Column="1" Width="150" Height="80" AcceptsReturn="True"
+          Margin="5,5,5,5" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+     </Grid>
+
+     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+         <Button x:Name="saveButton" Content="Save" Width="100" Margin="5"  />
+         <Button x:Name="cancelButton" Content="Cancel" Width="100" Margin="5" />
+     </StackPanel>
+
+ </Grid>
