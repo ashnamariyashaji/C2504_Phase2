@@ -1,0 +1,227 @@
+Dashboard.xaml
+
+ <Grid MaxWidth="1200">
+     <Grid.RowDefinitions>
+         <RowDefinition Height="auto"/>
+         <RowDefinition Height="auto"/>
+         <RowDefinition Height="*"/>
+         <RowDefinition Height="auto"/>
+     </Grid.RowDefinitions>
+
+     <TextBlock Text="Dashboard Overview" FontSize="32" FontWeight="Bold" Grid.Row="0" Margin="10 20 10 10"/>
+
+     <Grid Grid.Row="1" Margin="10 20 10 10">
+         <Grid.ColumnDefinitions>
+             <ColumnDefinition Width="*"/>
+             <ColumnDefinition Width="*"/>
+             <ColumnDefinition Width="*"/>
+             <ColumnDefinition Width="*"/>
+         </Grid.ColumnDefinitions>
+
+         <Button x:Name="btnPatientSearch" Grid.Column="0" Content="Patient Search" FontSize="12"
+             Background="white" FontWeight="Bold" Foreground="black" Height="80" 
+             Style="{StaticResource ShadowButton}" Click="btnPatientSearch_Click"/>
+
+         <Button x:Name="btnUserManager" Grid.Column="1" Margin="20 0 0 0" Content="User  Manager" FontSize="12"
+             Background="white" FontWeight="Bold" Foreground="black" Style="{StaticResource ShadowButton}"
+             Click="btnUser Manager_Click"/>
+
+         <Button x:Name="btnAppointmentManager" Grid.Column="2" Margin="20 0 0 0" Content="Appointment Manager" FontSize="12"
+             Background="white" FontWeight="Bold" Foreground="black" Style="{StaticResource ShadowButton}"
+             Click="btnAppointmentManager_Click"/>
+
+         <Button x:Name="btnAccountManager" Grid.Column="3" Margin="20 0 0 0" Content="Account Manager" FontSize="12"
+             Background="white" FontWeight="Bold" Foreground="black" Style="{StaticResource ShadowButton}"
+             Click="btnAccountManager_Click"/>
+     </Grid>
+
+     <Grid Grid.Row="2" Margin="10 20 10 10">
+         <Grid.ColumnDefinitions>
+             <ColumnDefinition Width="*"/>
+             <ColumnDefinition Width="250"/>
+         </Grid.ColumnDefinitions>
+
+         <!-- Patient Summary Section -->
+         <Border Grid.Column="0" Background="#D9E8FA" CornerRadius="3">
+             <StackPanel Margin="10">
+                 <TextBlock Text="Monitored Patients Summary" FontWeight="Bold"/>
+                 <ListView x:Name="PatientSummaryListView" Margin="10">
+                     <ListView.View>
+                         <GridView>
+                             <GridViewColumn Header="Patient Name" Width="150"/>
+                             <GridViewColumn Header="Condition" Width="100"/>
+                             <GridViewColumn Header="Last Blood Sugar" Width="120"/>
+                             <GridViewColumn Header="Last Heart Rate" Width="120"/>
+                         </GridView>
+                     </ListView.View>
+                 </ListView>
+             </StackPanel>
+         </Border>
+
+         <!-- Alerts Section -->
+         <Border Grid.Column="1" Background="#DCDCDC" Margin="10 0 0 0" CornerRadius="3">
+             <StackPanel Margin="10">
+                 <TextBlock Text="Alerts for Abnormal Readings" FontWeight="Bold"/>
+                 <ListView x:Name="AlertsListView" Margin="10">
+                     <ListView.View>
+                         <GridView>
+                             <GridViewColumn Header="Alert Type" Width="100"/>
+                             <GridViewColumn Header="Patient Name" Width="150"/>
+                             <GridViewColumn Header="Date" Width="100"/>
+                         </GridView>
+                     </ListView.View>
+                 </ListView>
+             </StackPanel>
+         </Border>
+     </Grid>
+
+     <!-- KPIs Section -->
+     <Grid Grid.Row="3" Margin="10 20 10 10">
+         <TextBlock Text="Key Performance Indicators" FontWeight="Bold" FontSize="16" Margin="0 0 0 10"/>
+         <StackPanel Orientation="Horizontal">
+             <TextBlock Text="Average Blood Sugar: " FontWeight="Bold"/>
+             <TextBlock x:Name="AverageBloodSugarText" Margin="5,0" />
+             <TextBlock Text=" | Critical Patients Count: " FontWeight="Bold"/>
+             <TextBlock x:Name="CriticalPatientsCountText" Margin="5,0" />
+         </StackPanel>
+     </Grid>
+ </Grid>
+
+
+----------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace CDMD
+{
+    public partial class AdminDashboard : Window
+    {
+        public AdminDashboard()
+        {
+            InitializeComponent();
+            LoadDashboardData();
+        }
+
+        private void LoadDashboardData()
+        {
+            // Load patient summary data
+            var patients = GetPatientsSummary();
+            PatientSummaryListView.ItemsSource = patients;
+
+            // Load alerts data
+            var alerts = GetAlerts();
+            AlertsListView.ItemsSource = alerts;
+
+            // Load KPIs
+            var averageBloodSugar = CalculateAverageBloodSugar();
+            var criticalPatientsCount = CountCriticalPatients();
+            AverageBloodSugarText.Text = averageBloodSugar.ToString("0.##");
+            CriticalPatientsCountText.Text = criticalPatientsCount.ToString();
+        }
+
+        private List<PatientSummary> GetPatientsSummary()
+        {
+            // Fetch patient summary data from the database
+            // This is a placeholder for actual database retrieval logic
+            return new List<PatientSummary>
+            {
+                new PatientSummary { PatientName = "John Doe", Condition = "Diabetes", LastBloodSugar = 120, LastHeartRate = 75 },
+                new PatientSummary { PatientName = "Jane Smith", Condition = "Hypertension", LastBloodSugar = 150, LastHeartRate = 80 },
+                // Add more patient data as needed
+            };
+        }
+
+        private List<Alert> GetAlerts()
+        {
+            // Fetch alert data from the database
+            // This is a placeholder for actual database retrieval logic
+            return new List<Alert>
+            {
+                new Alert { AlertType = "High Blood Sugar", PatientName = "John Doe", Date = DateTime.Now.AddMinutes(-30) },
+                new Alert { AlertType = "Low Heart Rate", PatientName = "Jane Smith", Date = DateTime.Now.AddMinutes(-15) },
+                // Add more alert data as needed
+            };
+        }
+
+        private double CalculateAverageBloodSugar()
+        {
+            // Placeholder for calculating average blood sugar from the database
+            return 135.0; // Example average value
+        }
+
+        private int CountCriticalPatients()
+        {
+            // Placeholder for counting critical patients from the database
+            return 2; // Example count
+        }
+
+        private void btnPatientSearch_Click(object sender, RoutedEventArgs e)
+        {
+            // Implement patient search functionality
+            MessageBox.Show("Patient search functionality to be implemented.");
+        }
+
+        private void btnUser _Manager_Click(object sender, RoutedEventArgs e)
+        {
+            // Open user management window
+            MessageBox.Show("User   management functionality to be implemented.");
+        }
+
+        private void btnAppointmentManager_Click(object sender, RoutedEventArgs e)
+        {
+            // Open appointment management window
+            MessageBox.Show("Appointment management functionality to be implemented.");
+        }
+
+        private void btnAccountManager_Click(object sender, RoutedEventArgs e)
+        {
+            // Open account management window
+            MessageBox.Show("Account management functionality to be implemented.");
+        }
+    }
+
+    public class PatientSummary
+    {
+        public string PatientName { get; set; }
+        public string Condition { get; set; }
+        public double LastBloodSugar { get; set; }
+        public int LastHeartRate { get; set; }
+    }
+
+    public class Alert
+    {
+        public string AlertType { get; set; }
+        public string PatientName { get; set; }
+        public DateTime Date { get; set; }
+    }
+}
+--------------------------------------------------------------------------------------------------
+
+login.xaml
+<Grid>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+    <Border Grid.Column="0"  Background="AliceBlue" Width="300" Height="300" CornerRadius="5">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+            <StackPanel Orientation="Vertical" Margin="10 10 10 0">
+                <TextBlock  Text="Username" FontWeight="bold" Margin="10 10 10 5" FontSize="10"/>
+                <TextBox x:Name="txtUsername" Margin="10 0 10 10" Height="30" Padding="4 4 4 4" 
+                         Text="{Binding CurrentUser.Email , UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Margin="10 0 10 10">
+                <TextBlock Text="Password" FontWeight="bold" Margin="10 10 10 5" FontSize="10"/>
+                <TextBox x:Name="txtPassword" Margin="10 0 10 10" Height="30" Padding="4 4 4 4"
+                              Text="{Binding CurrentUser.PasswordHash , UpdateSourceTrigger=PropertyChanged , Mode=TwoWay}"/>
+            </StackPanel>
+
+            <Button Width="200" Content="Login" Height="30" Background="Teal" Foreground="white" FontWeight="Bold" FontSize="10" Margin="10 10 10 10" Command="{Binding LoginCommand}"/>
+        </StackPanel>
+
+    </Border>
+</Grid>
+
